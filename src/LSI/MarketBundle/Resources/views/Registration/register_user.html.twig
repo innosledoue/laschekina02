@@ -95,13 +95,13 @@
             {{ form_widget(form.adresse.codePostal, {'attr' : {'placeholder' : 'Code postal'}}) }}
         </div>
 
-        {% if form.mairie is defined %}
+       {# {% if form.mairie is defined %}
             <div class="form-group" id="maire" style="display: none;">
                 {{ form_label(form.mairie.epi, 'EPCI') }}
                 {{ form_errors(form.mairie.epi) }}
                 {{ form_widget(form.mairie.epi, {'disabled' : 'disabled', 'attr':{'placeholder':'Votre EPCI'}}) }}
             </div>
-        {% endif %}
+        {% endif %}#}
 
         <div class="form-group">
             {{ form_label(form.indicatif, 'Indicatif de votre pays') }}

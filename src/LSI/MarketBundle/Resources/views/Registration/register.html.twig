@@ -63,17 +63,17 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
-            var monepci = function () {
+      /*  $(document).ready(function () {
+           /!* var monepci = function () {
                 $.ajax({
                     type: 'GET',
-                    url: '{{ path('ls_imarket_mon_epci') }}',
-                    data: {{ reponse }},
+                    url: '{##}{ path('ls_imarket_mon_epci') }}',
+                    data: {##}{ reponse }},
                     success: function (data) {
                         $("#maire").html(data);
                     }
                 })
-            }
-        })
+            }*!/
+        })*/
     </script>
 {% endblock javascripts %}

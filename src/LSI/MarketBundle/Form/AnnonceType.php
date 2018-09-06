@@ -3,7 +3,10 @@
 namespace LSI\MarketBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,7 +35,7 @@ class AnnonceType extends AbstractType
                 'required' => true,
 
             ))
-            ->add('prixDefaut', TextType::class, array(
+            ->add('prixDefaut', MoneyType::class, array(
                 'label' => 'Prix par defaut',
                 'required' => true,
 
@@ -43,15 +46,11 @@ class AnnonceType extends AbstractType
             ))
             ->add('annonceUpdateAt', DateTimeType::class)
             ->add('mairie')
-            ->add('statut', EntityType::class, array(
-                'label' => 'Statut de l\'annonce',
-                'class' => 'LSIMarketBundle:Statut',
-                'choice_label' => 'libelle',
-                'multiple' => false,
-                'expanded' => false,
-                'placeholder' => 'Sélectionner un statut',
-            ))
-            ->add('images', ImageType::class, array('label' => ''))
+            ->add('images', CollectionType::class, array(
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,))
+            ->add('adresse',AdresseType::class)
             ->add('categorie', EntityType::class, array(
                 'label' => 'Catégorie de l\'annonce',
                 'class' => 'LSIMarketBundle:Categorie',
@@ -60,6 +59,14 @@ class AnnonceType extends AbstractType
                 'expanded' => false,
                 'placeholder' => 'Sélectionner une catégorie',
             ))
+            ->add('typeAnnul', ChoiceType::class, array(
+                'label' => 'Type d\'annulation',
+                'placeholder' => 'Sélectionner le type d\'annulation',
+                'choices' => array(
+                    'Relax' => 'relax',
+                    'Strict' => 'strict'
+                )
+            ))
             ->add('save', SubmitType::class, array())
         ;
 
@@ -67,6 +74,13 @@ class AnnonceType extends AbstractType
             ->remove('dateCreation')
             ->remove('annonceUpdateAt')
             ->remove('mairie')
+            ->remove('pulicMairie')
+            ->remove('pulicAdministre')
+            ->remove('tarifAdminisEpci')
+            ->remove('tarifNonAdminisEpci')
+            ->remove('tarifNonAdmins')
+            ->remove('tarifEpci')
+            ->remove('tarifNonEpci');
             //->remove('dateCreation')
             ;
     }

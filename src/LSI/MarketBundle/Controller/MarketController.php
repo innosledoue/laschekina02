@@ -9,6 +9,7 @@
 namespace LSI\MarketBundle\Controller;
 
 
+use LSI\MarketBundle\Form\Annonce2Type;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use LSI\MarketBundle\Entity\Annonce;
 use LSI\MarketBundle\Entity\Categorie;
@@ -142,7 +143,7 @@ class MarketController extends Controller {
             $em->flush();
             $request->getSession()->getFlashBag()->add('notif', 'Annonce ajoutée avec succès !');
 
-            return $this->redirectToRoute('ls_imarket_voir_annonce', array('id' => $annonce->getId()));
+            return $this->redirectToRoute('ls_imarket_ajouter_annonce2', array('id' => $annonce->getId()));
         }
         return $this->render('LSIMarketBundle:market:ajouter.html.twig', array('form' => $form->createView()));
     }
@@ -519,5 +520,36 @@ class MarketController extends Controller {
                 ;
             $this->get('mailer')->send($mesg);
        }
+
+    public function ajouter2Action($id, Request $request) {
+        $this->denyAccessUnlessGranted('ROLE_MAIRIE', $this->redirectToRoute('fos_user_security_login'));
+        //connection à la BD
+        $em = $this->getDoctrine()->getManager();
+
+        //recupération de l'objet
+        $annonce = $em->getRepository('LSIMarketBundle:Annonce')->find($id);
+
+        if (null === $annonce)
+        {
+            throw new NotFoundHttpException("L'annonce dont le numéro est ".$id." n'existe pas.");
+        }
+
+        //création du formulaire
+        $form = $this->createForm(Annonce2Type::class, $annonce);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            //Insertion dans la BD
+            $em->persist($annonce);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('notice', 'Votre Annonce a été crée et publiée.');
+
+            //Redirection vers la page de consultation
+            return $this->redirectToRoute('ls_imarket_voir_annonce', array('id' => $annonce->getId(),
+            ));
+        }
+        //création de la vue
+        return $this->render('LSIMarketBundle:market:ajouter2.html.twig', array('form' => $form->createView()));
+    }
 
 }

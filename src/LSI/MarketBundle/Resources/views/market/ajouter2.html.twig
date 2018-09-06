@@ -12,49 +12,15 @@
             {{ form_start(form, {'attr' : {'claas' : 'form-control', 'novalidate':'novalidate'}}) }}
             <div class="col-xs-6 col-md-6 col-lg-6">
                 <div class="form-group">
-                    {#{{ form_label(form.titre) }}#}
-                    {{ form_row(form.titre, {'attr': {'placeholder': 'Titre de l\'anonnce'}}) }}
+                    {{ form_row(form.pulicMairie) }}
                 </div>
-                {{ form_errors(form.titre) }}
+                {{ form_errors(form.pulicMairie) }}
                 <div class="form-group">
-                    {#{{ form_label(form.description) }}#}
-                    {{ form_row(form.description, {'attr': {'placeholder': 'Texte descriptif sur l\'annonce'}}) }}
+                    {{ form_row(form.pulicAdministre) }}
                 </div>
-                {{ form_errors(form.description) }}
-                <div class="form-group">
-                    {#{{ form_label(form.prixDefaut) }}#}
-                    {{ form_row(form.prixDefaut, {'attr': {'placeholder': 'Prix TTC de la location'}}) }}
-                </div>
-                {{ form_errors(form.prixDefaut) }}
-                <div class="form-group">
-                    {{ form_row(form.regleCond, {'attr': {'placeholder': 'Règle ou conditions de la location'}}) }}
-                </div>
-                {{ form_errors(form.regleCond) }}
-                <div class="form-group">
-                {{ form_row(form.categorie) }}
-            </div>
-            {{ form_errors(form.categorie) }}
-                <div class="form-group">
-                    {{ form_row(form.typeAnnul) }}
-                </div>
+                {{ form_errors(form.pulicAdministre) }}
             </div>
             <div class="col-xs-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    {{ form_row(form.adresse.pays, {'attr': {'placeholder': 'Donner le pays'}}) }}
-                </div>
-                {{ form_errors(form.adresse.pays) }}
-                <div class="form-group">
-                    {{ form_row(form.adresse.ville,  {'attr': {'placeholder': 'Donner la ville'}}) }}
-                </div>
-                {{ form_errors(form.adresse.ville) }}
-                <div class="form-group">
-                    {{ form_row(form.adresse.rue, {'attr': {'placeholder': 'Donner la rue'}}) }}
-                </div>
-                {{ form_errors(form.adresse.rue) }}
-                <div class="form-group">
-                    {{ form_row(form.adresse.codePostal,  {'attr': {'placeholder': 'Donner le Code postal'}}) }}
-                </div>
-                {{ form_errors(form.adresse.codePostal) }}
                 <div class="form-group" id="" data-prototype="">
                     {{ form_widget(form.images) }}
                     <input type="button" id="add_code" value="autres images" class="btn btn-warning pull-right" />
@@ -71,9 +37,7 @@
 {% endblock %}
 
 {% block javascripts %}
-
     {{ parent() }}
-
     <script>
         $(document).ready(function () {
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
@@ -110,7 +74,7 @@
                     ;
                 }else{
                     template = $container.attr('data-prototype')
-                        .replace(/__name__label__/g, 'Image '+ (index +1))
+                        .replace(/__name__label__/g, 'Image ' + (index +1))
                         .replace(/__name__/g, index)
                     ;
                 }
@@ -144,11 +108,11 @@
                 $deleteButton.click(function(e) {
                     $prototype.remove();
                     if (index > 0){
-                        index --;}
+                        index --;
+                    }
+
                     e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-
                     return false;
-
                 });
             }
         })

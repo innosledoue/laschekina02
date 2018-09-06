@@ -18,7 +18,7 @@ class AdresseType extends AbstractType
     {
         $builder
             ->add('ville', TextType::class)
-            ->add('pays', TextType::class)
+            ->add('pays', CountryType::class)
             ->add('rue', TextType::class)
             ->add('codePostal', TextType::class)
         ;

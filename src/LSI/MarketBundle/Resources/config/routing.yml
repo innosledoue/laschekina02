@@ -32,11 +32,19 @@ ls_imarket_liste_annonce:
     defaults:
         _controller: LSIMarketBundle:Market:listeReservation
 
-# Pour creer une annonce
+# Pour creer une annonce phase 1
 ls_imarket_ajouter_annonce:
     path: /ajouter
     defaults:
         _controller: LSIMarketBundle:Market:ajouter
+
+# Création d'annonce phase 2
+ls_imarket_ajouter_annonce2:
+    path: /ajouter/{id}
+    defaults:
+        _controller: LSIMarketBundle:Market:ajouter2
+    requirements:
+        id: \d+
 
 # Pour consulter une annonce
 ls_imarket_voir_annonce:
